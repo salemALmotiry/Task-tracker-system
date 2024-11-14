@@ -33,6 +33,10 @@ public class TaskTrackerController {
 
     @PutMapping("/update/{index}")
     public ApiResponse updateTask(@PathVariable int index ,@RequestBody TaskTracker taskTracker){
+        if (index > taskTrackers.size() || index < 0) {
+            return new ApiResponse("Task not exist");
+        }
+
         taskTrackers.set(index,taskTracker);
         return new ApiResponse( "Task updated");
     }
@@ -40,7 +44,9 @@ public class TaskTrackerController {
 
     @DeleteMapping("/delete/{index}")
     public ApiResponse deleteTask(@PathVariable int index){
-
+        if (index > taskTrackers.size() || index < 0) {
+            return new ApiResponse("Task not exist");
+        }
         this.taskTrackers.remove(index);
 
         return new ApiResponse("Task deleted");
